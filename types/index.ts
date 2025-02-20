@@ -8,6 +8,8 @@ export interface Task {
   assignee: string;
   dueDate: string;
   priority: "Low" | "Medium" | "High";
+  commentCount: number;
+  attachmentCount: number;
 }
 
 export interface TaskContextType {
@@ -26,4 +28,12 @@ export interface ColumnProps {
 
 export interface TaskCardProps {
   task: Task;
+}
+
+export interface PriorityChipProps {
+  label: "High" | "Medium" | "Low";
+}
+
+export interface StatusChipProps {
+  label: "Not Started" | "In Progress" | "To-Do List";
 }

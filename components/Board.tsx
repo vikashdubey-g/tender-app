@@ -1,7 +1,8 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import Column from "./Column";
 import { TaskContext } from "../context/TaskContext";
+import { groupTasksByStatus } from "@/utils";
 
 const Board: React.FC = () => {
   const taskContext = useContext(TaskContext);
@@ -12,14 +13,14 @@ const Board: React.FC = () => {
 
   const { tasks } = taskContext;
 
+  const groupedTasks = useMemo(() => {
+    return groupTasksByStatus(tasks);
+  }, [tasks]);
+
   return (
-    <div className="flex space-x-4 p-8 bg-gray-950 min-h-screen">
-      {["Not Started", "In Progress", "To-Do List"].map((status) => (
-        <Column
-          key={status}
-          title={status}
-          tasks={tasks.filter((task) => task.status === status)}
-        />
+    <div className="flex space-x-4 p-8 bg-gray-700 min-h-screen">
+      {Object.entries(groupedTasks).map(([status, groupTasks]) => (
+        <Column key={status} title={status} tasks={groupTasks} />
       ))}
     </div>
   );
