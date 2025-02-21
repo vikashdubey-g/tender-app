@@ -27,19 +27,42 @@ export const groupTasksByStatus = (
 
 export const priorityStyles = {
   High: {
-    bg: "red-500",
+    bg: "bg-red-500",
     text: "text-white",
   },
-  Medium: { bg: "orange-500", text: "text-white" },
-  Low: { bg: "green-500", text: "text-white" },
+  Medium: { bg: "bg-orange-500", text: "text-white" },
+  Low: { bg: "bg-green-500", text: "text-white" },
 };
 
 export const statusStyles: Record<string, Record<string, string>> = {
   "Not Started": {
-    bg: "orange-500",
+    bg: "bg-orange-500",
     text: "text-white",
-    circleColor: "orange",
+    circleColor: "bg-orange-400",
   },
-  "In Progress": { bg: "blue-500", text: "text-white", circleColor: "blue" },
-  "To-Do List": { bg: "green-500", text: "text-white", circleColor: "green" },
+  "In Progress": {
+    bg: "bg-blue-500",
+    text: "text-white",
+    circleColor: "bg-blue-400",
+  },
+  "To-Do List": {
+    bg: "bg-green-500",
+    text: "text-white",
+    circleColor: "bg-green-400",
+  },
+};
+
+export const statusBgClasses: Record<string, string> = {
+  "Not Started": "bg-orange-400",
+  "In Progress": "bg-blue-400",
+  "To-Do List": "bg-green-400",
+};
+
+export const searchTasks = (tasks: Task[], query: string) => {
+  return tasks.filter((task) => {
+    return Object.values(task)
+      .join("")
+      .toLowerCase()
+      .includes(query.toLowerCase());
+  });
 };

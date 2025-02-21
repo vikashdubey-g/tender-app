@@ -9,6 +9,7 @@ import calendarIcon from "@/assets/svg/calendar.svg";
 import avatarIcon from "@/assets/svg/avatar.svg";
 import commentIcon from "@/assets/svg/comment.svg";
 import attachmentIcon from "@/assets/svg/attachment.svg";
+import { useDraggable } from "@dnd-kit/core";
 
 const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const {
@@ -22,8 +23,27 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
     attachmentCount,
   } = task;
 
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: task.id,
+    });
+
   return (
-    <div className="bg-gray-800 rounded-lg shadow-md text-white">
+    <div
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      style={{
+        transform: transform
+          ? `translate(${transform.x}px, ${transform.y}px)`
+          : undefined,
+        opacity: isDragging ? 0.6 : 1,
+        cursor: isDragging ? "grabbing" : "grab",
+      }}
+      className={`w-full max-w-full bg-gray-800 rounded-xl shadow-md text-white transition-transform duration-300 transform hover:scale-[1.03]   hover:shadow-lg hover:bg-gray-700 cursor-pointer
+         ${isDragging ? "border-2 border-blue-300 shadow-xl" : ""}
+        `}
+    >
       <div className="p-4">
         <div className="flex justify-between items-center">
           <StatusChip label={status} />
@@ -47,6 +67,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
               alt="Calendar icon"
               width={12}
               height={12}
+              className="cursor-pointer"
             />{" "}
             <span>{dueDate}</span>
           </div>
