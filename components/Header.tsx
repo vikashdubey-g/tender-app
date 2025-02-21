@@ -15,31 +15,22 @@ const Header = () => {
   const taskContext = useContext(TaskContext);
   const [searchQuery, setSearchQuery] = useState("");
 
-  if (!taskContext) {
-    return <div className="text-white">Loading tasks...</div>;
-  }
+  useEffect(() => {
+    // limiting the function call on every text change, similar to debounce logic
+    const timeout = setTimeout(() => {
+      if (taskContext) {
+        const filteredTasks = searchTasks(initialTasks, searchQuery);
+        taskContext?.setTasks(filteredTasks);
+      }
+    }, 300);
 
-  const { setTasks } = taskContext; //destructuring the setTask from the context
+    return () => clearTimeout(timeout);
+  }, [searchQuery]);
 
   // input search function
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
-
-  // search functions
-  const searchAndFilters = () => {
-    if (searchQuery.trim()) {
-      const filteredTasks = searchTasks(initialTasks, searchQuery);
-      setTasks(filteredTasks);
-    }
-  };
-
-  useEffect(() => {
-    // limiting the function call on every text change, similar to debounce logic
-    setTimeout(() => {
-      searchAndFilters();
-    }, 300);
-  }, [searchQuery]);
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 bg-gray-700 ">

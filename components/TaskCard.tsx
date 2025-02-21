@@ -14,7 +14,7 @@ import calendarIcon from "@/assets/svg/calendar.svg";
 import avatarIcon from "@/assets/svg/avatar.svg";
 import commentIcon from "@/assets/svg/comment.svg";
 import attachmentIcon from "@/assets/svg/attachment.svg";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 const TaskCard: FC<TaskCardProps> = ({ task }) => {
   // destructuring all the data from the props
@@ -34,13 +34,13 @@ const TaskCard: FC<TaskCardProps> = ({ task }) => {
       id: task.id,
     });
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  const handleNavigation = () => {
-    if (!isDragging) {
-      router.push(`/task/${task.id}`);
-    }
-  };
+  // const handleNavigation = () => {
+  //   if (!isDragging) {
+  //     router.push(`/task/${task.id}`);
+  //   }
+  // };
 
   return (
     <div

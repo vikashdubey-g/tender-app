@@ -13,16 +13,18 @@ import { DndContext, DragEndEvent } from "@dnd-kit/core";
 const Board: React.FC = () => {
   const taskContext = useContext(TaskContext);
 
-  if (!taskContext) {
-    return <div className="text-white">Loading tasks...</div>;
-  }
+  // Ensure tasks is always accessed safely
+  const tasks = taskContext?.tasks ?? [];
+  const setTasks = taskContext?.setTasks ?? (() => {});
 
-  const { tasks, setTasks } = taskContext;
-
-  // gorouping the tasks by their status
+  // Grouping the tasks by their status
   const groupedTasks = useMemo(() => {
     return groupTasksByStatus(tasks);
   }, [tasks]);
+
+  if (!taskContext) {
+    return <div className="text-white">Loading tasks...</div>;
+  }
 
   // on dropoff of the card updating the tasks
   const onDragEnd = (event: DragEndEvent) => {
