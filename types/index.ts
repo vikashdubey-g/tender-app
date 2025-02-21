@@ -37,3 +37,7 @@ export interface PriorityChipProps {
 export interface StatusChipProps {
   label: "Not Started" | "In Progress" | "To-Do List";
 }
+
+export interface TaskDetailsProps {
+  task: Task;
+}

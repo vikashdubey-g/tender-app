@@ -1,8 +1,8 @@
-import React, { memo } from "react";
+import React, { FC, memo } from "react";
 import { StatusChipProps } from "@/types";
 import { statusStyles } from "@/utils";
 
-const StatusChip: React.FC<StatusChipProps> = ({ label }) => {
+const StatusChip: FC<StatusChipProps> = ({ label }) => {
   return (
     <div
       className={`flex items-center ${

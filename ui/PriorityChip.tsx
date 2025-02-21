@@ -1,4 +1,5 @@
 import React, { FC, memo } from "react";
+
 import { PriorityChipProps } from "@/types";
 import { priorityStyles } from "@/utils";
 

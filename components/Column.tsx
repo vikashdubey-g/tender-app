@@ -1,14 +1,17 @@
-import React, { memo } from "react";
-import { ColumnProps } from "@/types";
-import Image from "next/image";
+import React, { FC, memo } from "react";
+
 import TaskCard from "./TaskCard";
+import Image from "next/image";
+
+import { ColumnProps } from "@/types";
 import { statusStyles } from "@/utils";
+import { useDroppable } from "@dnd-kit/core";
+
 // assets
 import threeDot from "@/assets/svg/dots-horizontal.svg";
 import add from "@/assets/svg/add.svg";
-import { useDroppable } from "@dnd-kit/core";
 
-const Column: React.FC<ColumnProps> = ({ title, tasks }) => {
+const Column: FC<ColumnProps> = ({ title, tasks }) => {
   const { setNodeRef } = useDroppable({ id: title });
 
   return (
@@ -17,7 +20,7 @@ const Column: React.FC<ColumnProps> = ({ title, tasks }) => {
         <div className="flex items-center gap-2">
           <div
             className={`w-3 h-3 ${
-              statusStyles[title]?.circleColor || "bg-gray-400"
+              statusStyles[title]?.circleColor || "bg-gray-400" // showing the dynamic color for the title
             } rounded-full`}
           />
           <h2 className="text-xl font-semibold text-white "> {title}</h2>
@@ -46,7 +49,7 @@ const Column: React.FC<ColumnProps> = ({ title, tasks }) => {
       </div>
       <div className="space-y-4 overflow-y-auto px-2 pt-2 pb-5 max-h-[600px]  scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-800">
         {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} />
+          <TaskCard key={task.id} task={task} /> // using the task card component
         ))}
       </div>
     </div>

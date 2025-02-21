@@ -1,11 +1,15 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+
 import Image from "next/image";
-import bellIcon from "@/assets/svg/bell.svg";
-import searchIcon from "@/assets/svg/search.svg";
+
+import { TaskContext } from "@/context/TaskContext";
 import { searchTasks } from "@/utils";
 import { initialTasks } from "@/data";
-import { TaskContext } from "@/context/TaskContext";
+
+// assets
+import bellIcon from "@/assets/svg/bell.svg";
+import searchIcon from "@/assets/svg/search.svg";
 
 const Header = () => {
   const taskContext = useContext(TaskContext);
@@ -15,8 +19,14 @@ const Header = () => {
     return <div className="text-white">Loading tasks...</div>;
   }
 
-  const { setTasks } = taskContext;
+  const { setTasks } = taskContext; //destructuring the setTask from the context
 
+  // input search function
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // search functions
   const searchAndFilters = () => {
     if (searchQuery.trim()) {
       const filteredTasks = searchTasks(initialTasks, searchQuery);
@@ -25,6 +35,7 @@ const Header = () => {
   };
 
   useEffect(() => {
+    // limiting the function call on every text change, similar to debounce logic
     setTimeout(() => {
       searchAndFilters();
     }, 300);
@@ -41,7 +52,7 @@ const Header = () => {
               placeholder="Search for Tenders"
               className="bg-transparent text-gray-800 outline-none flex-grow px-2"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={handleSearch}
             />
             <Image
               src={searchIcon}

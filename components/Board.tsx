@@ -1,11 +1,14 @@
 "use client";
 import React, { useContext, useMemo } from "react";
+
 import Column from "./Column";
-import { TaskContext } from "../context/TaskContext";
-import { groupTasksByStatus } from "@/utils";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { Task } from "@/types";
 import Header from "./Header";
+
+import { TaskContext } from "../context/TaskContext";
+
+import { groupTasksByStatus } from "@/utils";
+import { Task } from "@/types";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
 
 const Board: React.FC = () => {
   const taskContext = useContext(TaskContext);
@@ -16,10 +19,12 @@ const Board: React.FC = () => {
 
   const { tasks, setTasks } = taskContext;
 
+  // gorouping the tasks by their status
   const groupedTasks = useMemo(() => {
     return groupTasksByStatus(tasks);
   }, [tasks]);
 
+  // on dropoff of the card updating the tasks
   const onDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
@@ -40,7 +45,7 @@ const Board: React.FC = () => {
       <DndContext onDragEnd={onDragEnd}>
         <div className="flex space-x-4 mt-6 ">
           {Object.entries(groupedTasks).map(([status, groupTasks]) => (
-            <Column key={status} title={status} tasks={groupTasks} />
+            <Column key={status} title={status} tasks={groupTasks} /> // using column component
           ))}
         </div>
       </DndContext>
